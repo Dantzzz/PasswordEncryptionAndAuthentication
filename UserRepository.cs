@@ -16,6 +16,7 @@ namespace PasswordEncryptionAndAuthentication
             if (users.Contains(profileEntry))
             {
                 Console.WriteLine("Login Successful!");
+                Console.WriteLine();
             }
             else
             {

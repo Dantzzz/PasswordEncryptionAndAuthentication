@@ -11,6 +11,7 @@ namespace PasswordEncryptionAndAuthentication
 
         private static void Display()
         {
+            Console.Clear();
             Console.WriteLine("Main Menu");
             Console.WriteLine("Please select an option below...");
             Console.WriteLine("Press 1 to create account.");
@@ -22,20 +23,20 @@ namespace PasswordEncryptionAndAuthentication
                 int selectedOption = Int32.Parse(Console.ReadLine());
                 if (selectedOption > 3 || selectedOption == 0)
                 {
-                    Console.WriteLine("Invalid. Try again.\n");
-                    Console.Clear();
+                    Console.WriteLine("Invalid. Try again.\nPress any key to return to main menu...");
+                    Console.ReadKey();
                     Initialize();
                 }
                 else
                 {
-                    Console.Clear();
+                    
                     RouteOption(selectedOption);
                 }
             }
             catch (Exception)
             {
-                Console.WriteLine("Invalid. Try again.");
-                Console.Clear();
+                Console.WriteLine("Invalid. Try again. \nPress any key to return to main menu...");
+                Console.ReadKey();
                 Initialize();
             }
         }

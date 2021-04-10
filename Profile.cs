@@ -22,6 +22,7 @@ namespace PasswordEncryptionAndAuthentication
              
             Console.WriteLine("Please enter a password: ");
             string pwrd = Console.ReadLine();
+            
 
             Profile newProfile = new Profile(uname, pwrd);
             UserRepository.AddUser(newProfile);

@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 
 namespace PasswordEncryptionAndAuthentication
 {
-    class Profile
+    class Profile : IEquatable<Profile>
     {
+        public string Username { get; set; }
+        public string Password { get; set; }
 
         public Profile(string usernameEntry, string passwordEntry)
         {
-            string username = usernameEntry;
-            string password = passwordEntry; 
+            Username = usernameEntry;
+            Password = passwordEntry; 
         }
+
         internal static void Create()
         {
             Console.WriteLine("Create a new account...");
@@ -25,21 +27,31 @@ namespace PasswordEncryptionAndAuthentication
             string pwrd = EncryptPassword(entry);
 
             Profile newProfile = new Profile(uname, pwrd);
-            UserRepository.AddUser(newProfile);
-
-            Console.WriteLine("Profile created. \nPress any key to return to main menu...");
-            Console.ReadKey();
-            MainMenu.Initialize();
-
-            // TODO: Refactor later to prevent blank entries and/or duplicates
+            bool uniqueProfile = UserRepository.IsUnique(newProfile);
+            
+            if(uniqueProfile == true)
+            {
+                UserRepository.AddUser(newProfile);
+                Console.WriteLine("Profile created. \nPress any key to return to main menu...");
+                MainMenu.Initialize();
+            }
+            else
+            {
+                Console.WriteLine("Invalid. Profile already exists. \nPress any key to return to return...");
+                Console.ReadKey();
+                Console.Clear();
+                Create();
+            }
         }
         internal static void Login()
         {
+            
             Console.WriteLine("Username: ");
             string uname = Console.ReadLine();
 
             Console.WriteLine("Password: ");
-            string pwrd = Console.ReadLine();
+            string entry = Console.ReadLine();
+            string pwrd = EncryptPassword(entry);
 
             Profile profileEntry = new Profile(uname, pwrd);
 
@@ -56,6 +68,12 @@ namespace PasswordEncryptionAndAuthentication
                 sb.Append(hash[i].ToString("X2"));
             }
             return sb.ToString();
+        }
+
+        public bool Equals(Profile other)
+        {
+            return this.Username == other.Username &&
+                   this.Password == other.Password;
         }
     }
 }

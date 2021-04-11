@@ -16,7 +16,6 @@ namespace PasswordEncryptionAndAuthentication
             if (users.Contains(profileEntry))
             {
                 Console.WriteLine("Login Successful!");
-                Console.WriteLine();
             }
             else
             {
@@ -25,5 +24,15 @@ namespace PasswordEncryptionAndAuthentication
                 Profile.Login();
             }
         }
+
+        internal static bool IsUnique(Profile entry)
+        {
+            if (users.Contains(entry))
+            {
+                return false;
+            }
+            else return true;
+        }
+
     }
 }
